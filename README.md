@@ -56,6 +56,7 @@ ls -la                             # Regular shell commands
 | `!find <query>` | File search |
 | `!models` | List AI models |
 | `!help` | Show help |
+| `!create` | Project generate |
 
 ---
 
@@ -72,6 +73,7 @@ apk-smart-cli/
     ├── groq_utils.py   # AI utilities
     ├── git_helper.py   # Git commands
     └── file_search.py  # File search
+    └── scaffold.py     # project generate
 ```
 
 ---
