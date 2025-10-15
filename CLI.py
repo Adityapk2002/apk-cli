@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
-import subprocess
 import yaml
+import subprocess
 from prompt_toolkit import PromptSession
 from prompt_toolkit.history import FileHistory
 from prompt_toolkit.completion import Completer, Completion, PathCompleter
@@ -29,9 +29,8 @@ def load_config():
         return config
 
 config = load_config()
-
 os.environ["GROQ_API_KEY"] = config["GROQ_API_KEY"]
-
+from plugins.scaffold import create_project
 
 from openai import OpenAI
 client = OpenAI(api_key=config["GROQ_API_KEY"], base_url="https://api.groq.com/openai/v1")
@@ -146,6 +145,13 @@ def execute_command(cmd: str):
                 console.print(f"[green]Changed to {get_current_dir()}[/]")
             except Exception as e:
                 console.print(f"[red]Error:[/] {e}")
+        
+        elif cmd.startswith("!create"):
+            try:
+                create_project()
+            except Exception as e:
+                console.print(f"[red]Error running project generator:[/] {e}")
+
 
         elif cmd == "!help":
             console.print(Panel.fit(
@@ -157,6 +163,7 @@ def execute_command(cmd: str):
 [green]!git [action][/]     - Smart Git helper
 [magenta]!find [query][/]    - Natural language file search
 [blue]!models[/]           - List available AI models
+[bold white]!create[/]         - Launch project generator (React, Node, Flask, etc.)
 [dim]exit/quit[/]         - Exit shell
                     """),
                 title="Help",
